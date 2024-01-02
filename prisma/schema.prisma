@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  hash      String
+  firstName String
+  lastName  String
+  address   String?
+  phone     String
+  Order     Order[]
+
+  @@map("users")
+}
+
+model Product {
+  id                 Int           @id @default(autoincrement())
+  productName        String
+  productDescription String?
+  originalPrice      Int?
+  price              Int
+  inventoryQuantity  Int
+  imageUrl           String?
+  categoryId         Int
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  category           Category      @relation(fields: [categoryId], references: [id])
+  OrderDetail        OrderDetail[]
+
+  @@map("products")
+}
+
+model Category {
+  id           Int       @id @default(autoincrement())
+  categoryName String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  product      Product[]
+
+  @@map("categories")
+}
+
+model Order {
+  id              Int           @id @default(autoincrement())
+  userId          Int
+  orderDate       DateTime
+  orderStatus     Int
+  shippingAddress String
+  shippingMethod  String
+  totalAmount     Int
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  OrderDetail     OrderDetail[]
+  user            User          @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}
+
+model OrderDetail {
+  id         Int      @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  quantity   Int
+  price      Int
+  totalPrice Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  order      Order    @relation(fields: [orderId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@map("orderDetails")
+}
+
+model Cart {
+  id              Int    @id @default(autoincrement())
+  userId          Int
+  cartItemsString String
+
+  @@map("cart")
+}
