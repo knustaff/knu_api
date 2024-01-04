@@ -39,8 +39,8 @@ export class ProductController {
     }
 
     @Post('create-many-product')
-    createManyProducts(@GetUser('id') userId: number, @Body() dto: CreateProductDto[]) {
-        return this.productService.createManyProduct(userId, dto);
+    createManyProducts(@Body() dto: CreateProductDto[]) {
+        return this.productService.createManyProduct(dto);
     }
 
     // @HttpCode(HttpStatus.CREATED)

@@ -39,5 +39,5 @@ export declare class ProductController {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    createManyProducts(userId: number, dto: CreateProductDto[]): Promise<import(".prisma/client").Prisma.BatchPayload>;
+    createManyProducts(dto: CreateProductDto[]): Promise<import(".prisma/client").Prisma.BatchPayload>;
 }

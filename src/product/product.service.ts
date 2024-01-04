@@ -50,18 +50,7 @@ export class ProductService {
         return getProducts;
     }
 
-    async createManyProduct(userId: number, dto: CreateProductDto[]) {
-        if(!userId) {
-            throw new ForbiddenException('Has no access');
-        }
-        const findUser = await this.prisma.user.findFirst({
-            where: {
-                id: userId
-            }
-        });
-        if(!findUser || findUser.email !== "admin@kimandyou.vn") {
-            throw new ForbiddenException('Fail to get admin');
-        }
+    async createManyProduct(dto: CreateProductDto[]) {
         const product = await this.prisma.product.createMany({ data: dto });
         if (!product) {
             throw new ForbiddenException('Failed to create product');

@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
-const decorator_1 = require("../auth/decorator");
 let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
@@ -29,8 +28,8 @@ let ProductController = class ProductController {
     getProductsByCategoryId(categoryId) {
         return this.productService.getProductsByCategoryId(categoryId);
     }
-    createManyProducts(userId, dto) {
-        return this.productService.createManyProduct(userId, dto);
+    createManyProducts(dto) {
+        return this.productService.createManyProduct(dto);
     }
 };
 exports.ProductController = ProductController;
@@ -56,10 +55,9 @@ __decorate([
 ], ProductController.prototype, "getProductsByCategoryId", null);
 __decorate([
     (0, common_1.Post)('create-many-product'),
-    __param(0, (0, decorator_1.GetUser)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Array]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "createManyProducts", null);
 exports.ProductController = ProductController = __decorate([
