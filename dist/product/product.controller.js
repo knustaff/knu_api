@@ -29,8 +29,8 @@ let ProductController = class ProductController {
     getProductsByCategoryId(categoryId) {
         return this.productService.getProductsByCategoryId(categoryId);
     }
-    createManyProducts(email, dto) {
-        return this.productService.createManyProduct(email, dto);
+    createManyProducts(userId, dto) {
+        return this.productService.createManyProduct(userId, dto);
     }
 };
 exports.ProductController = ProductController;
@@ -56,10 +56,10 @@ __decorate([
 ], ProductController.prototype, "getProductsByCategoryId", null);
 __decorate([
     (0, common_1.Post)('create-many-product'),
-    __param(0, (0, decorator_1.GetUser)('email')),
+    __param(0, (0, decorator_1.GetUser)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Array]),
+    __metadata("design:paramtypes", [Number, Array]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "createManyProducts", null);
 exports.ProductController = ProductController = __decorate([

@@ -53,9 +53,17 @@ let ProductService = class ProductService {
         }
         return getProducts;
     }
-    async createManyProduct(userEmail, dto) {
-        if (!userEmail || userEmail !== 'admin@kimandyou.vn') {
-            throw new common_1.ForbiddenException('Forbidden');
+    async createManyProduct(userId, dto) {
+        if (!userId) {
+            throw new common_1.ForbiddenException('Has no access');
+        }
+        const findUser = await this.prisma.user.findFirst({
+            where: {
+                id: userId
+            }
+        });
+        if (!findUser || findUser.email !== "admin@kimandyou.vn") {
+            throw new common_1.ForbiddenException('Fail to get admin');
         }
         const product = await this.prisma.product.createMany({ data: dto });
         if (!product) {
