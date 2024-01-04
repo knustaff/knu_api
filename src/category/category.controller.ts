@@ -17,7 +17,7 @@ import { JwtGuard } from '../auth/guard';
 // import { Staff } from '@prisma/client';
 import { CreateCategoryDto, EditCategoryDto } from './dto';
 
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 @Controller('category')
 export class CategoryController {
     constructor(private categoryService: CategoryService) {}

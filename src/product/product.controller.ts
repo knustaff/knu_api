@@ -37,6 +37,11 @@ export class ProductController {
         return this.productService.getProductsByCategoryId(categoryId);
     }
 
+    // @Post()
+    // createManyProducts(@Body() dto: CreateProductDto[]) {
+    //     return this.productService.createManyProduct(dto);
+    // }
+
     // @HttpCode(HttpStatus.CREATED)
     // @Post()
     // createProduct(@GetStaff() staff: Staff, @Body() dto: CreateProductDto) {
@@ -60,3 +65,4 @@ export class ProductController {
     //     return this.productService.deleteProduct(staff, productId);
     // }
 }
+

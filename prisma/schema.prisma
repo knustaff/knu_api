@@ -19,7 +19,7 @@ model User {
   firstName String
   lastName  String
   address   String?
-  phone     String
+  phone     String   @unique
   Order     Order[]
 
   @@map("users")
@@ -55,10 +55,13 @@ model Category {
 model Order {
   id              Int           @id @default(autoincrement())
   userId          Int
+  name            String
   orderDate       DateTime
   orderStatus     Int
+  phoneNumber     String
   shippingAddress String
   shippingMethod  String
+  paymentMethod   String
   totalAmount     Int
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -69,16 +72,18 @@ model Order {
 }
 
 model OrderDetail {
-  id         Int      @id @default(autoincrement())
-  orderId    Int
-  productId  Int
-  quantity   Int
-  price      Int
-  totalPrice Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  order      Order    @relation(fields: [orderId], references: [id])
-  product    Product  @relation(fields: [productId], references: [id])
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  productId   Int
+  productName String
+  imageUrl    String
+  quantity    Int
+  price       Int
+  totalPrice  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  order       Order    @relation(fields: [orderId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
 
   @@map("orderDetails")
 }

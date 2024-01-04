@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Cart } from '@prisma/client';
+import { CreateCartDto } from './dto';
 
 @Injectable()
 export class CartService {
@@ -8,7 +9,7 @@ export class CartService {
 
     }
 
-    async createCart(userId: number, cartItemsString: string) {
+    async createCart(userId: number, dto: CreateCartDto) {
         let result: Cart;
         const findCart = await this.prisma.cart.findFirst({
             where: {
@@ -21,14 +22,14 @@ export class CartService {
                     id: findCart.id
                 }, 
                 data: {
-                    cartItemsString: cartItemsString
+                    ...dto
                 }
             });
         } else {
             result = await this.prisma.cart.create({
                 data: {
                     userId: userId,
-                    cartItemsString: cartItemsString
+                    ...dto
                 }
             });
         }
@@ -36,5 +37,20 @@ export class CartService {
         delete result.id;
         delete result.userId;
         return result;
+    }
+
+    async getCart(userId: number) {
+        const cart = await this.prisma.cart.findFirst({
+            where: {
+                userId: userId
+            }
+        });
+        if(!cart) {
+            throw new ForbiddenException('User has no cart data');
+        }
+
+        delete cart.id;
+        delete cart.userId;
+        return cart;
     }
 }

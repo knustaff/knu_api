@@ -1,9 +1,11 @@
-import { Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { GetUser } from '../auth/decorator';
 // import { Staff } from '@prisma/client';
 import { CreateOrderDto, EditOrderDto } from './dto';
+import { JwtGuard } from '../auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('order')
 export class OrderController {
     constructor(private orderService: OrderService) {
@@ -27,7 +29,7 @@ export class OrderController {
 
     @HttpCode(HttpStatus.CREATED)
     @Post()
-    createOrder(@GetUser('id') userId: number, dto: CreateOrderDto) {
+    createOrder(@GetUser('id') userId: number, @Body() dto: CreateOrderDto) {
         return this.orderService.createOder(userId, dto);
     }
 

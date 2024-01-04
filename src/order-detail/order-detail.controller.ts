@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { OrderDetailService } from './order-detail.service';
 import { CreateOrderDetailDto, EditOrderDetailDto } from './dto';
 // import { GetStaff } from '../auth/decorator';
@@ -10,14 +10,14 @@ export class OrderDetailController {
 
     }
 
-    @Get('orderDetailByOrderId')
+    @Get()
     getAllOrderDetailByOrderId(userId: number, orderId: number) {
         return this.orderDetailService.getAllOrderDetailByOrderId(userId, orderId);
     }
 
     @HttpCode(HttpStatus.CREATED)
     @Post()
-    createOrderDetail(orderId: number, dto: CreateOrderDetailDto[]) {
+    createOrderDetail(@Body('orderId') orderId: number, @Body('cartData') dto: CreateOrderDetailDto[]) {
         return this.orderDetailService.createOrderDetail(orderId, dto);
     }
 

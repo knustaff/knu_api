@@ -1,6 +1,10 @@
 import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 export class CreateOrderDto {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
     @IsDateString()
     @IsNotEmpty()
     orderDate: string;
@@ -16,8 +20,16 @@ export class CreateOrderDto {
     @IsString()
     @IsNotEmpty()
     shippingMethod: string;
+    
+    @IsString()
+    @IsNotEmpty()
+    paymentMethod: string
 
     @IsNumber()
     @IsNotEmpty()
     totalAmount: number;
+
+    @IsString()
+    @IsNotEmpty()
+    phoneNumber: string;
 }

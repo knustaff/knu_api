@@ -15,6 +15,11 @@ export class AuthService {
     ) {}
 
     async signup(dto: CreateUserDto) {
+        const regexPhoneNumber = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+        const checkPhoneNumber = dto.phone.match(regexPhoneNumber);
+        if(!checkPhoneNumber) {
+            throw new ForbiddenException('Phone number is invalid');
+        }
         // generate the password
         const hash = await argon.hash(dto.password);
         // save the new user in db
@@ -116,7 +121,7 @@ export class AuthService {
         const secret = this.config.get('JWT_SECRET');
 
         const token = await this.jwt.signAsync(payload, {
-            expiresIn: '15m',
+            expiresIn: '24h',
             secret: secret,
         });
 

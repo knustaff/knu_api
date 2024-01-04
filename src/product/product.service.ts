@@ -50,6 +50,15 @@ export class ProductService {
         return getProducts;
     }
 
+    // async createManyProduct(dto: CreateProductDto[]) {
+    //     const product = await this.prisma.product.createMany({ data: dto });
+    //     if (!product) {
+    //         throw new ForbiddenException('Failed to create product');
+    //     }
+
+    //     return product;
+    // }
+
     // async createProduct(staff: Staff, dto: CreateProductDto) {
     //     if (!staff.roleId) {
     //         throw new ForbiddenException('The staff cannot access products');

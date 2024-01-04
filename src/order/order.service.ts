@@ -6,7 +6,9 @@ import { OrderStatus } from '../helper/order.type';
 
 @Injectable()
 export class OrderService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) {
+        
+    }
 
     // async getAllOrders(staff: Staff) {
     //     if (!staff.roleId) {
