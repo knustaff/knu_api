@@ -14,6 +14,7 @@ import {
 import { JwtGuard } from '../auth/guard';
 import { ProductService } from './product.service';
 import { CreateProductDto, EditProductDto } from './dto';
+import { GetUser } from '../auth/decorator';
 // import { GetStaff } from '../auth/decorator';
 // import { Staff } from '@prisma/client';
 
@@ -37,10 +38,10 @@ export class ProductController {
         return this.productService.getProductsByCategoryId(categoryId);
     }
 
-    // @Post()
-    // createManyProducts(@Body() dto: CreateProductDto[]) {
-    //     return this.productService.createManyProduct(dto);
-    // }
+    @Post('create-many-product')
+    createManyProducts(@GetUser('email') email: string, @Body() dto: CreateProductDto[]) {
+        return this.productService.createManyProduct(email, dto);
+    }
 
     // @HttpCode(HttpStatus.CREATED)
     // @Post()

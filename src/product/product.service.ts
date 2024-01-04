@@ -50,14 +50,17 @@ export class ProductService {
         return getProducts;
     }
 
-    // async createManyProduct(dto: CreateProductDto[]) {
-    //     const product = await this.prisma.product.createMany({ data: dto });
-    //     if (!product) {
-    //         throw new ForbiddenException('Failed to create product');
-    //     }
+    async createManyProduct(userEmail: string, dto: CreateProductDto[]) {
+        if(!userEmail || userEmail !== 'admin@kimandyou.vn') {
+            throw new ForbiddenException('Forbidden');
+        }
+        const product = await this.prisma.product.createMany({ data: dto });
+        if (!product) {
+            throw new ForbiddenException('Failed to create product');
+        }
 
-    //     return product;
-    // }
+        return product;
+    }
 
     // async createProduct(staff: Staff, dto: CreateProductDto) {
     //     if (!staff.roleId) {
